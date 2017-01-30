@@ -106,4 +106,20 @@ router.patch('/:id', (req, res, next) => {
   }
 });
 
+router.delete('/:id', (req, res, next) => {
+  knex('classifieds')
+    .delete(['id', 'title', 'description', 'price', 'item_image'])
+    .where('classifieds.id', req.params.id)
+    .then((classified) => {
+      if (!classified[0]) {
+        res.sendStatus(500);
+      } else {
+        res.json(classified[0]);
+      }
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 module.exports = router;
