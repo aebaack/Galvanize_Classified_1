@@ -30,7 +30,6 @@ router.get('/:id', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   const newClassified = {
-    id: req.body.id,
     title: req.body.title,
     description: req.body.description,
     price: req.body.price,
@@ -45,7 +44,7 @@ router.post('/', (req, res, next) => {
   }
 
   if (valuePresentForAllProperties) {
-    knex('classified')
+    knex('classifieds')
       .insert(newClassified, ['id', 'title', 'description', 'price', 'item_image'])
       .then((classified) => {
         res.json(classified[0]);
