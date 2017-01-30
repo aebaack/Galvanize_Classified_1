@@ -55,7 +55,55 @@ router.post('/', (req, res, next) => {
   } else {
     res.sendStatus(500);
   }
+});
 
+router.patch('/:id', (req, res, next) => {
+  const { title, description, price, item_image } = req.body;
+  const classifiedUpdate = {};
+
+  if (title) {
+    classifiedUpdate.title = title;
+  }
+  if (description) {
+    classifiedUpdate.description = description;
+  }
+  if (price) {
+    classifiedUpdate.price = price;
+  }
+  if (item_image) {
+    classifiedUpdate.item_image = item_image;
+  }
+
+  let updatesPresent = false;
+  for (let prop in classifiedUpdate) {
+    if (classifiedUpdate[prop]) {
+      updatesPresent = true;
+    }
+  }
+
+  if (updatesPresent) {
+    knex('classifieds')
+      .where('classifieds.id', req.params.id)
+      .then((classified) => {
+        if (!classified[0]) {
+          res.sendStatus(500);
+        }
+        knex('classifieds')
+          .where('classifieds.id', req.params.id)
+          .update(classifiedUpdate, ['id', 'title', 'description', 'price', 'item_image'])
+          .then((updatedClassified) => {
+            res.json(updatedClassified[0]);
+          })
+          .catch((err) => {
+            next(err);
+          });
+      })
+      .catch((err) => {
+        next(err);
+      });
+  } else {
+    res.sendStatus(500);
+  }
 });
 
 module.exports = router;
