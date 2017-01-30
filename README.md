@@ -1,5 +1,6 @@
 # Galvanize Classified - Part 1
 
+# Deployment available at https://g-classifieds.herokuapp.com/
 
 ## Read the entire README before beginning. Commit often.
 
