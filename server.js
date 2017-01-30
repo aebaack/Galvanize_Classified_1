@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 
 const messages = require('./routes/classifieds');
 
+app.use(express.static('public'));
 app.use('/classifieds',messages);
 
 app.use((err, _req, res, _next) => {
