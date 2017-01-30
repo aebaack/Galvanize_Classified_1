@@ -107,7 +107,7 @@ router.patch('/:id', (req, res, next) => {
 });
 
 router.delete('/:id', (req, res, next) => {
-  knex('classifieds')
+  knex('classified')
     .delete(['id', 'title', 'description', 'price', 'item_image'])
     .where('classifieds.id', req.params.id)
     .then((classified) => {
